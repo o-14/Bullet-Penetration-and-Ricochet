@@ -1,0 +1,189 @@
+{
+  "modName": "BPR",
+  "displayName": "Bullet Penetration and Ricochet",
+  "minMcmVersion": 1,
+  "content": [
+    { "text": "Bullet Penetration and Ricochet", "type": "section" },
+    { "text": "Changes apply when the Pause menu closes. No save reload is required.", "type": "text" }
+  ],
+  "pages": [
+    {
+      "pageDisplayName": "Gameplay",
+      "content": [
+        { "text": "Penetration", "type": "section" },
+        {
+          "id": "fDamageFalloffExponent:Penetration",
+          "text": "Damage retention curve",
+          "type": "slider",
+          "help": "Higher values preserve more damage after crossing a surface. Default: 4. Minimum: 2. Maximum: 5.",
+          "valueOptions": { "min": 2.0, "max": 5.0, "step": 0.1, "sourceType": "ModSettingFloat" }
+        },
+        {
+          "id": "fVariationDegrees:Penetration",
+          "text": "Direction Variation",
+          "type": "slider",
+          "help": "The amount of degrees that a bullet will deviate after it has penetrated. Default: 0 degrees.",
+          "valueOptions": { "min": 0, "max": 12, "step": 0.25, "sourceType": "ModSettingFloat" }
+        },
+        {
+          "id": "bPreventRepeatActor:Penetration",
+          "text": "Prevent repeat actor hit",
+          "type": "switcher",
+          "help": "Stops a continued projectile from immediately hitting the same actor again.",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        { "text": "Player Projectiles", "type": "section" },
+        {
+          "id": "bPenetration:Player",
+          "text": "Player penetration",
+          "type": "switcher",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        {
+          "id": "bRebound:Player",
+          "text": "Player ricochets",
+          "type": "switcher",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        {
+          "id": "iPenetrationLimit:Player",
+          "text": "Player penetration limit",
+          "type": "slider",
+          "help": "Number of penetrations allowed for a single bullet. Zero means unlimited.",
+          "valueOptions": { "min": 0, "max": 20, "step": 1, "sourceType": "ModSettingInt" }
+        },
+        {
+          "id": "iReboundLimit:Player",
+          "text": "Player ricochet limit",
+          "type": "slider",
+          "help": "Number of ricochets allowed for a single bullet. Zero means unlimited. Maximum: 5.",
+          "valueOptions": { "min": 0, "max": 5, "step": 1, "sourceType": "ModSettingInt" }
+        },
+        { "text": "NPC Projectiles", "type": "section" },
+        {
+          "id": "bPenetration:NPC",
+          "text": "NPC penetration",
+          "type": "switcher",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        {
+          "id": "bRebound:NPC",
+          "text": "NPC ricochets",
+          "type": "switcher",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        {
+          "id": "iPenetrationLimit:NPC",
+          "text": "NPC penetration limit",
+          "type": "slider",
+          "help": "Number of penetrations allowed for a single bullet. Zero means unlimited.",
+          "valueOptions": { "min": 0, "max": 20, "step": 1, "sourceType": "ModSettingInt" }
+        },
+        {
+          "id": "iReboundLimit:NPC",
+          "text": "NPC ricochet limit",
+          "type": "slider",
+          "help": "Number of ricochets allowed for a single bullet. Zero means unlimited. Maximum: 5.",
+          "valueOptions": { "min": 0, "max": 5, "step": 1, "sourceType": "ModSettingInt" }
+        },
+        { "text": "Changes apply when the Pause menu closes. No save reload is required.", "type": "text" }
+      ]
+    },
+    {
+      "pageDisplayName": "Ricochet",
+      "content": [
+        { "text": "Ricochet Response", "type": "section" },
+        {
+          "id": "bEnabled:Rebound",
+          "text": "Enable ricochets",
+          "type": "switcher",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        {
+          "id": "bAllowProps:Rebound",
+          "text": "Allow prop ricochets",
+          "type": "switcher",
+          "help": "Allows ricochets from movable or interactive props.",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        {
+          "id": "fChancePercent:Rebound",
+          "text": "Ricochet chance",
+          "type": "slider",
+          "help": "How likely a bullet will ricochet. Default: 50 percent.",
+          "valueOptions": { "min": 0, "max": 100, "step": 1, "sourceType": "ModSettingFloat" }
+        },
+        {
+          "id": "fHeadOnExclusionDegrees:Rebound",
+          "text": "Ricochet angle",
+          "type": "slider",
+          "help": "Higher values require more glancing hits. Lower values allow more direct hits. Default: 70.",
+          "valueOptions": { "min": 0, "max": 90, "step": 1, "sourceType": "ModSettingFloat" }
+        },
+        { "text": "Ricochet angles are calculated as 90 degrees minus the configured value. A value of 70 requires a 20 degree angle to ricochet.", "type": "text" },
+        {
+          "id": "fVariationDegrees:Rebound",
+          "text": "Direction Variation",
+          "type": "slider",
+          "help": "The amount of degrees a ricochet bullet will deviate from its original point of impact. Default: 3 degrees.",
+          "valueOptions": { "min": 0, "max": 12, "step": 0.25, "sourceType": "ModSettingFloat" }
+        },
+        { "text": "Changes apply when the Pause menu closes. No save reload is required.", "type": "text" }
+      ]
+    },
+    {
+      "pageDisplayName": "Receiver & Visuals",
+      "content": [
+        { "text": "Receiver Scaling", "type": "section" },
+        {
+          "id": "bEnabled:Receiver",
+          "text": "Receiver scaling",
+          "type": "switcher",
+          "help": "Uses the perk-free fired weapon configuration as a secondary penetration modifier.",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        {
+          "id": "fInfluence:Receiver",
+          "text": "Receiver influence",
+          "type": "slider",
+          "valueOptions": { "min": 0, "max": 4, "step": 0.1, "sourceType": "ModSettingFloat" }
+        },
+        {
+          "id": "fMinimum:Receiver",
+          "text": "Minimum multiplier",
+          "type": "slider",
+          "valueOptions": { "min": 0.05, "max": 1, "step": 0.05, "sourceType": "ModSettingFloat" }
+        },
+        {
+          "id": "fMaximum:Receiver",
+          "text": "Maximum multiplier",
+          "type": "slider",
+          "valueOptions": { "min": 1, "max": 8, "step": 0.25, "sourceType": "ModSettingFloat" }
+        },
+        { "text": "Projectile Visuals", "type": "section" },
+        {
+          "id": "bSuppressProjectileTrails:Visuals",
+          "text": "Hide tracer and vapor trails",
+          "type": "switcher",
+          "help": "Hides complete stock tracer and vapor effects for initial shots and continuations. Explosive projectile models remain visible.",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        { "text": "Changes apply when the Pause menu closes. No save reload is required.", "type": "text" }
+      ]
+    },
+    {
+      "pageDisplayName": "Diagnostics",
+      "content": [
+        { "text": "Logging", "type": "section" },
+        {
+          "id": "bDetailedLogging:Diagnostics",
+          "text": "Detailed impact logging",
+          "type": "switcher",
+          "help": "Writes per-impact diagnostics. Leave disabled for normal play.",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        { "text": "Changes apply when the Pause menu closes. No save reload is required.", "type": "text" }
+      ]
+    }
+  ]
+}

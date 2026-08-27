@@ -1,0 +1,8 @@
+.vs/
+.vscode/
+.xmake/
+build/
+dist/
+compile_commands.json
+*.zip
+
