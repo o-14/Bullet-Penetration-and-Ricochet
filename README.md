@@ -42,9 +42,10 @@ Settings are stored in:
 Additional INI files load alphabetically; later files override earlier files.
 Changes made through MCM apply when the Pause menu closes.
 
-Detailed logging is off by default. The material-specific ricochet angle and
-loss options are opt-in. Optional Armament, Munitions, and Caliber Complex
-patches are available separately; install only the patches for mods you use.
+Detailed logging is off by default. Material-specific ricochet angles are on
+by default; material-specific loss is off. Optional Armament, Munitions, and
+Caliber Complex patches are available separately; install only the patches
+for mods you use.
 
 BPR adds no permanent save data. Allow active projectiles to finish before uninstalling.
 

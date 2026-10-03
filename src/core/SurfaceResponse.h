@@ -39,7 +39,7 @@ namespace BPR::Core
     struct ReboundSettings
     {
         bool enabled{ true };
-        bool useMaterialAngles{ false };
+        bool useMaterialAngles{ true };
         bool useMaterialLoss{ false };
         float chancePercent{ 50.0F };
         float headOnExclusionDegrees{ 70.0F };

@@ -28,7 +28,7 @@ Material, ammunition, and optional compatibility layers:
 Layer files load alphabetically. Later filenames override earlier files. MCM
 changes apply when the Pause menu closes; no save reload is required.
 
-Material-specific ricochet angles and loss are optional and off by default.
+Material-specific ricochet angles are on by default; material-specific loss is off.
 Armament, Munitions, and Caliber Complex patches are separate downloads.
 Install only the patches for ammunition mods you use.
 
@@ -55,7 +55,7 @@ Version 3.1.0
 - Adds optional material-specific ricochet angles and mild damage/power loss.
 - Disables vegetation ricochets without changing vegetation penetration.
 - Adds Fallout 4 1.10.984 support through the existing NG runtime path.
-- Widens the opt-in material-specific ricochet windows while preserving distinct families.
+- Widens material-specific ricochet windows while preserving distinct families.
 - Allows very shallow ballistic ricochets from water and other soft surfaces.
 - Scales every material angle with the player's global Ricochet Angle setting.
 - Keeps the global ricochet chance universal across every material.
