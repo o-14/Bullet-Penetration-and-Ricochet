@@ -31,11 +31,16 @@ namespace BPR::Core
         float reboundCostScale{ 1.0F };
         SurfaceBehavior behavior{ SurfaceBehavior::kFlexible };
         bool conductive{ false };
+        float materialRicochetAngleDegrees{ 10.0F };
+        float materialRicochetLossScale{ 1.0F };
+        bool materialRicochetEligible{ true };
     };
 
     struct ReboundSettings
     {
         bool enabled{ true };
+        bool useMaterialAngles{ false };
+        bool useMaterialLoss{ false };
         float chancePercent{ 50.0F };
         float headOnExclusionDegrees{ 70.0F };
         float baseEnergyCost{ 18.0F };
@@ -70,6 +75,7 @@ namespace BPR::Core
         bool chanceRejected{ false };
         float chanceRollPercent{ 0.0F };
         float planeAngleDegrees{ 0.0F };
+        float effectiveAngleLimitDegrees{ 0.0F };
         float energyCostPercent{ 0.0F };
         float remainingFraction{ 0.0F };
         Vector3 direction;

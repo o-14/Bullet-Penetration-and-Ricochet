@@ -16,13 +16,18 @@ License.
 BPR uses Dear Modding FO4's multi-runtime CommonLibF4 fork.
 
 - Source: <https://github.com/Dear-Modding-FO4/commonlibf4>
-- Pinned commit: `20b2727ed42455afbe8bf23ab1066b238335d2b5`
+- Pinned commit: `2aaefd104754b59b16e435b2859b299bb68dd8a2`
 - Copyright: Copyright (c) 2019 ryan-rsm-mckenzie
-- Root license: MIT
+- Root license at the pinned commit: GPLv3 with the included Modding Exception
+  and additional linking exception (`lib/commonlibf4/LICENSE` and `EXCEPTIONS`).
 
 Its commonlib-shared dependency is pinned to
-`f0b1670ee9caac2e349497f6f3c08a69633a8ea7` and is licensed under GPLv3 with
+`e30b310a19621ff9f635cf2c456fe633559c1c24` and is licensed under GPLv3 with
 the Modding Exception and additional linking exception.
+
+The CommonLibF4 source tree also pins DearModdingUI-API commit
+`9ddb9a8dacef8c5a116fabd3fe3a453cc446f830` as a header-only build dependency.
+BPR does not include or call the DearModdingUI API.
 
 ## spdlog
 

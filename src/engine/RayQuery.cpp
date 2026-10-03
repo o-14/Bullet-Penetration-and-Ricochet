@@ -60,10 +60,10 @@ namespace BPR::Engine
                 return RE::bhkNPCollisionObject::Getbhk(world, body);
             }
 
-            // Fallout 4 1.11.x changed this function's first parameter from the
-            // outer bhkWorld wrapper to its inner hknpBSWorld. The current
-            // CommonLib declaration retains the old signature even though its
-            // NG/AE relocation resolves to the new function. Adapt the ABI here
+            // Fallout 4's NG/AE runtime families (1.10.980 and later) use the
+            // inner hknpBSWorld as this function's first parameter. The current
+            // CommonLib declaration retains the OG signature even though its
+            // NG/AE relocation resolves to the newer function. Adapt the ABI
             // instead of letting the engine interpret bhkWorld as hknpBSWorld.
             RE::hknpBSWorld* worldNP = world->m_worldNP.get();
             if (!worldNP) {

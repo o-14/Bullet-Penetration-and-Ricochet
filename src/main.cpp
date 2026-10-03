@@ -10,12 +10,16 @@ namespace Main
     {
         bool g_initialized = false;
 
-        bool SupportedRuntime(REL::Version version) noexcept
+        constexpr bool SupportedRuntime(REL::Version version) noexcept
         {
             return version == F4SE::RUNTIME_1_10_163 ||
+                version == F4SE::RUNTIME_1_10_984 ||
                 version == F4SE::RUNTIME_1_11_191 ||
-                version == F4SE::RUNTIME_1_11_221;
+                version == F4SE::RUNTIME_1_11_221 ||
+                version == F4SE::RUNTIME_1_11_240;
         }
+
+        static_assert(SupportedRuntime(F4SE::RUNTIME_1_10_984));
 
         void ResetState()
         {
@@ -60,7 +64,7 @@ namespace Main
                 REX::ERROR("BPR could not register the F4SE message listener");
                 return;
             }
-            REX::INFO("BPR 3.0.0 initialized for Fallout 4 {}", f4se->RuntimeVersion().string());
+            REX::INFO("BPR 3.1.0 initialized for Fallout 4 {}", f4se->RuntimeVersion().string());
             g_initialized = true;
         });
         return g_initialized;
@@ -76,7 +80,7 @@ namespace Main
         // be discoverable through CommonLib's singleton during the query phase.
         info->infoVersion = F4SE::PluginInfo::kVersion;
         info->name = "BPR";
-        info->version = REL::Version{ 3, 0, 0, 0 }.pack();
+        info->version = REL::Version{ 3, 1, 0, 0 }.pack();
         return SupportedRuntime(f4se->RuntimeVersion());
     }
 

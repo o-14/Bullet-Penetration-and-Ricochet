@@ -107,6 +107,20 @@
           "valueOptions": { "sourceType": "ModSettingBool" }
         },
         {
+          "id": "bUseMaterialAngles:Rebound",
+          "text": "Material-specific angles",
+          "type": "switcher",
+          "help": "Classifies ricochets by materials; softer surfaces need shallow hits, harder surfaces allow steeper hits.",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        {
+          "id": "bUseMaterialLoss:Rebound",
+          "text": "Material-specific loss",
+          "type": "switcher",
+          "help": "Allows materials to determine how much a ricochet loses in power and damage.",
+          "valueOptions": { "sourceType": "ModSettingBool" }
+        },
+        {
           "id": "fChancePercent:Rebound",
           "text": "Ricochet chance",
           "type": "slider",

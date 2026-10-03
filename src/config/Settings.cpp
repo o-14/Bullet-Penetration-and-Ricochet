@@ -110,6 +110,12 @@ namespace BPR::Config
                     value.behavior = ParseBehavior(field);
                 } else if (name == "conductive" && ParseBool(field, flag)) {
                     value.conductive = flag;
+                } else if (name == "ricochetangle" && ParseFloat(field, number)) {
+                    value.materialRicochetAngleDegrees = std::clamp(number, 0.0F, 90.0F);
+                } else if (name == "ricochetloss" && ParseFloat(field, number)) {
+                    value.materialRicochetLossScale = std::clamp(number, 0.75F, 1.25F);
+                } else if (name == "ricocheteligible" && ParseBool(field, flag)) {
+                    value.materialRicochetEligible = flag;
                 }
             });
             return value;
@@ -139,21 +145,21 @@ namespace BPR::Config
         settings.projectileProfiles.emplace("shot-slug", Core::ProjectileProfile{ 1.04F, 0.96F, 1.12F, false });
         settings.projectileProfiles.emplace("energy-beam", Core::ProjectileProfile{ 0.74F, 1.16F, 0.90F, true });
 
-        settings.surfaceFamilies.emplace("general", Core::SurfaceProfile{ 0.84F, 17.0F, 1.05F, Core::SurfaceBehavior::kFlexible, false });
-        settings.surfaceFamilies.emplace("textile", Core::SurfaceProfile{ 1.72F, 0.0F, 0.0F, Core::SurfaceBehavior::kSuppressRebound, false });
-        settings.surfaceFamilies.emplace("glass", Core::SurfaceProfile{ 1.63F, 7.0F, 1.34F, Core::SurfaceBehavior::kFrangible, false });
-        settings.surfaceFamilies.emplace("lumber", Core::SurfaceProfile{ 1.14F, 17.0F, 1.18F, Core::SurfaceBehavior::kFlexible, false });
-        settings.surfaceFamilies.emplace("sheet-metal", Core::SurfaceProfile{ 0.93F, 12.0F, 0.92F, Core::SurfaceBehavior::kRigid, true });
-        settings.surfaceFamilies.emplace("structural-metal", Core::SurfaceProfile{ 0.66F, 9.0F, 0.72F, Core::SurfaceBehavior::kRigid, true });
-        settings.surfaceFamilies.emplace("armor-metal", Core::SurfaceProfile{ 0.32F, 5.0F, 0.48F, Core::SurfaceBehavior::kRigid, true });
-        settings.surfaceFamilies.emplace("masonry", Core::SurfaceProfile{ 0.52F, 8.0F, 0.81F, Core::SurfaceBehavior::kRigid, false });
-        settings.surfaceFamilies.emplace("heavy-stone", Core::SurfaceProfile{ 0.34F, 5.0F, 0.66F, Core::SurfaceBehavior::kRigid, false });
-        settings.surfaceFamilies.emplace("flesh", Core::SurfaceProfile{ 1.41F, 0.0F, 0.0F, Core::SurfaceBehavior::kSuppressRebound, false });
-        settings.surfaceFamilies.emplace("chitin", Core::SurfaceProfile{ 0.77F, 10.0F, 1.22F, Core::SurfaceBehavior::kFlexible, false });
-        settings.surfaceFamilies.emplace("soil", Core::SurfaceProfile{ 0.54F, 0.0F, 0.0F, Core::SurfaceBehavior::kSuppressRebound, false });
-        settings.surfaceFamilies.emplace("plastic", Core::SurfaceProfile{ 1.26F, 15.0F, 1.35F, Core::SurfaceBehavior::kFlexible, false });
-        settings.surfaceFamilies.emplace("rubber", Core::SurfaceProfile{ 0.64F, 0.0F, 0.0F, Core::SurfaceBehavior::kSuppressRebound, false });
-        settings.surfaceFamilies.emplace("liquid", Core::SurfaceProfile{ 0.12F, 0.0F, 0.0F, Core::SurfaceBehavior::kLiquid, false });
+        settings.surfaceFamilies.emplace("general", Core::SurfaceProfile{ 0.84F, 17.0F, 1.05F, Core::SurfaceBehavior::kFlexible, false, 14.0F, 1.02F, true });
+        settings.surfaceFamilies.emplace("textile", Core::SurfaceProfile{ 1.72F, 0.0F, 0.0F, Core::SurfaceBehavior::kSuppressRebound, false, 3.0F, 1.12F, true });
+        settings.surfaceFamilies.emplace("glass", Core::SurfaceProfile{ 1.63F, 7.0F, 1.34F, Core::SurfaceBehavior::kFrangible, false, 12.0F, 1.06F, true });
+        settings.surfaceFamilies.emplace("lumber", Core::SurfaceProfile{ 1.14F, 17.0F, 1.18F, Core::SurfaceBehavior::kFlexible, false, 10.0F, 1.03F, true });
+        settings.surfaceFamilies.emplace("sheet-metal", Core::SurfaceProfile{ 0.93F, 12.0F, 0.92F, Core::SurfaceBehavior::kRigid, true, 16.0F, 1.00F, true });
+        settings.surfaceFamilies.emplace("structural-metal", Core::SurfaceProfile{ 0.66F, 9.0F, 0.72F, Core::SurfaceBehavior::kRigid, true, 17.0F, 0.98F, true });
+        settings.surfaceFamilies.emplace("armor-metal", Core::SurfaceProfile{ 0.32F, 5.0F, 0.48F, Core::SurfaceBehavior::kRigid, true, 19.0F, 0.95F, true });
+        settings.surfaceFamilies.emplace("masonry", Core::SurfaceProfile{ 0.52F, 8.0F, 0.81F, Core::SurfaceBehavior::kRigid, false, 18.5F, 1.01F, true });
+        settings.surfaceFamilies.emplace("heavy-stone", Core::SurfaceProfile{ 0.34F, 5.0F, 0.66F, Core::SurfaceBehavior::kRigid, false, 20.0F, 0.99F, true });
+        settings.surfaceFamilies.emplace("flesh", Core::SurfaceProfile{ 1.41F, 0.0F, 0.0F, Core::SurfaceBehavior::kSuppressRebound, false, 3.0F, 1.12F, true });
+        settings.surfaceFamilies.emplace("chitin", Core::SurfaceProfile{ 0.77F, 10.0F, 1.22F, Core::SurfaceBehavior::kFlexible, false, 11.0F, 1.04F, true });
+        settings.surfaceFamilies.emplace("soil", Core::SurfaceProfile{ 0.54F, 0.0F, 0.0F, Core::SurfaceBehavior::kSuppressRebound, false, 7.0F, 1.07F, true });
+        settings.surfaceFamilies.emplace("plastic", Core::SurfaceProfile{ 1.26F, 15.0F, 1.35F, Core::SurfaceBehavior::kFlexible, false, 10.0F, 1.06F, true });
+        settings.surfaceFamilies.emplace("rubber", Core::SurfaceProfile{ 0.64F, 0.0F, 0.0F, Core::SurfaceBehavior::kSuppressRebound, false, 7.0F, 1.08F, true });
+        settings.surfaceFamilies.emplace("liquid", Core::SurfaceProfile{ 0.12F, 0.0F, 0.0F, Core::SurfaceBehavior::kLiquid, false, 4.0F, 1.12F, true });
         return settings;
     }
 
@@ -183,6 +189,8 @@ namespace BPR::Config
 
         auto applyRicochet = [&](std::string_view section) {
             ApplyBool(document, section, "Enabled", runtime.rebound.enabled);
+            ApplyBool(document, section, "UseMaterialAngles", runtime.rebound.useMaterialAngles);
+            ApplyBool(document, section, "UseMaterialLoss", runtime.rebound.useMaterialLoss);
             ApplyFloat(document, section, "ChancePercent", runtime.rebound.chancePercent, 0.0F, 100.0F);
             ApplyFloat(document, section, "HeadOnExclusionDegrees", runtime.rebound.headOnExclusionDegrees, 0.0F, 90.0F);
             ApplyFloat(document, section, "BaseEnergyCost", runtime.rebound.baseEnergyCost, 0.0F, 1000.0F);

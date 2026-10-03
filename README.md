@@ -1,16 +1,16 @@
 # Bullet Penetration and Ricochet
 
-BPR 3.0.0 is an ESP-free F4SE plugin that adds material-aware bullet penetration
+BPR 3.1.0 is an ESP-free F4SE plugin that adds material-aware bullet penetration
 and ricochets to Fallout 4.
 
 ## Requirements
 
-- Fallout 4 `1.10.163`, `1.11.191`, or `1.11.221`
+- Fallout 4 `1.10.163`, `1.10.984`, `1.11.191`, `1.11.221`, or `1.11.240`
 - Matching F4SE version
 - Matching Address Library
 - Mod Configuration Menu is optional
 
-One `BPR.dll` supports all three listed runtimes.
+One `BPR.dll` supports all five listed runtimes.
 
 ## Features
 
@@ -18,6 +18,9 @@ One `BPR.dll` supports all three listed runtimes.
 - Projectile-profile, receiver-instance, material, and measured-thickness modifiers.
 - Cumulative damage retention across multiple surfaces.
 - Material- and angle-aware ricochets with configurable chance and direction variation.
+- Optional, globally scalable angles for eligible material families, including terrain and water.
+- Vegetation permits penetration but does not ricochet.
+- Deliberately mild material-specific ricochet loss.
 - Separate player and NPC controls, limits, repeat-actor protection, and prop ricochet control.
 - Exact coverage for all 156 base-game and official DLC material records.
 - Parent and deterministic pattern fallback for Creation Club and mod-added materials.
@@ -38,6 +41,10 @@ Settings are stored in:
 
 Additional INI files load alphabetically; later files override earlier files.
 Changes made through MCM apply when the Pause menu closes.
+
+Detailed logging is off by default. The material-specific ricochet angle and
+loss options are opt-in. Optional Armament, Munitions, and Caliber Complex
+patches are available separately; install only the patches for mods you use.
 
 BPR adds no permanent save data. Allow active projectiles to finish before uninstalling.
 
@@ -61,5 +68,5 @@ BPR — Copyright © 2026 o14
 BPR is licensed under GNU GPL version 3 with the additional permissions stated
 in the included `EXCEPTIONS` file.
 
-BPR is licensed under GPLv3 with the included exception. See `LICENSE`,
+See `LICENSE`,
 `EXCEPTIONS`, `COPYRIGHT.md`, `THIRD_PARTY_NOTICES.md`, and `CREDITS.md`.

@@ -221,8 +221,11 @@ namespace BPR::Runtime
             }
             if (settings.detailedLogging) {
                 REX::INFO(
-                    "[BPR] chain={} rebound planeAngle={:.2f} chance={:.2f}/{:.2f} costPercent={:.2f} remaining={:.4f} count={}/{} material={}->{}",
+                    "[BPR] chain={} rebound planeAngle={:.2f} materialReferenceAngle={:.2f} effectiveAngle={:.2f} materialLoss={:.3f} chance={:.2f}/{:.2f} costPercent={:.2f} remaining={:.4f} count={}/{} material={}->{}",
                     state.chainID, response.planeAngleDegrees,
+                    surface.profile.materialRicochetAngleDegrees,
+                    response.effectiveAngleLimitDegrees,
+                    surface.profile.materialRicochetLossScale,
                     response.chanceRollPercent, settings.rebound.chancePercent,
                     response.energyCostPercent,
                     state.remainingFraction, state.reboundCount, controls.maxRicochets,

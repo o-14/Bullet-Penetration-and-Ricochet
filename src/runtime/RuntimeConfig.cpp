@@ -78,6 +78,8 @@ namespace BPR::Runtime
             }
             boolValue("Rebound", "bEnabled", value.rebound.enabled);
             boolValue("Rebound", "bAllowProps", value.impactPolicy.allowPropRicochets);
+            boolValue("Rebound", "bUseMaterialAngles", value.rebound.useMaterialAngles);
+            boolValue("Rebound", "bUseMaterialLoss", value.rebound.useMaterialLoss);
             floatValue("Rebound", "fChancePercent", value.rebound.chancePercent, 0.0F, 100.0F);
             floatValue("Rebound", "fHeadOnExclusionDegrees", value.rebound.headOnExclusionDegrees, 0.0F, 90.0F);
             floatValue("Rebound", "fVariationDegrees", value.rebound.variationDegrees, 0.0F, 12.0F);
@@ -256,6 +258,17 @@ namespace BPR::Runtime
                 for (const auto& file : files) {
                     Config::IniDocument layer;
                     if (layer.Load(file, &error)) {
+                        if (const auto required = layer.Find("Compatibility", "RequiredPlugin")) {
+                            const std::string plugin = Config::Trim(*required);
+                            if (plugin.empty() || !_dataHandler.LookupModByName(plugin)) {
+                                if (!plugin.empty()) {
+                                    _missingPlugins.insert(plugin);
+                                } else {
+                                    ++_invalidEntries;
+                                }
+                                continue;
+                            }
+                        }
                         Config::ApplyDocument(_snapshot->data, layer);
                         _layers.push_back(std::move(layer));
                     } else {
@@ -385,13 +398,14 @@ namespace BPR::Runtime
             REX::INFO("BPR projectile classification: exact ammo override first; runtime beam record fallback excludes ballistic Alt Trigger");
             const Config::RuntimeSettings& effective = next->data.runtime;
             REX::INFO(
-                "BPR effective settings: diagnostics={} trailsSuppressed={} falloff={:.3f} penetrationVariation={:.2f} repeatActor={} receiver={}/{:.3f}[{:.3f},{:.3f}] rebound={} props={} chance={:.2f} ricochetAngle={:.2f} costs={:.2f}/{:.2f} repeat={:.3f} reboundVariation={:.2f}",
+                "BPR effective settings: diagnostics={} trailsSuppressed={} falloff={:.3f} penetrationVariation={:.2f} repeatActor={} receiver={}/{:.3f}[{:.3f},{:.3f}] rebound={} props={} materialAngles={} materialLoss={} chance={:.2f} ricochetAngle={:.2f} costs={:.2f}/{:.2f} repeat={:.3f} reboundVariation={:.2f}",
                 effective.detailedLogging, effective.suppressProjectileTrails,
                 effective.damageFalloffExponent, effective.penetrationVariationDegrees,
                 effective.preventRepeatActor,
                 effective.receiver.enabled, effective.receiver.exponent,
                 effective.receiver.minimum, effective.receiver.maximum,
                 effective.rebound.enabled, effective.impactPolicy.allowPropRicochets,
+                effective.rebound.useMaterialAngles, effective.rebound.useMaterialLoss,
                 effective.rebound.chancePercent, effective.rebound.headOnExclusionDegrees,
                 effective.rebound.baseEnergyCost,
                 effective.rebound.incidenceEnergyCost, effective.rebound.repeatPenalty,

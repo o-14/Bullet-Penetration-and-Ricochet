@@ -1,8 +1,8 @@
 #include <winres.h>
 
 1 VERSIONINFO
-FILEVERSION 3, 0, 0, 0
-PRODUCTVERSION 3, 0, 0, 0
+FILEVERSION 3, 1, 0, 0
+PRODUCTVERSION 3, 1, 0, 0
 FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
     FILEFLAGS 0x1L
@@ -19,12 +19,12 @@ BEGIN
         BEGIN
             VALUE "Comments", ""
             VALUE "FileDescription", "Bullet Penetration and Ricochet"
-            VALUE "FileVersion", "3.0.0"
+            VALUE "FileVersion", "3.1.0"
             VALUE "InternalName", "BPR"
             VALUE "LegalCopyright", "o14"
             VALUE "LegalTrademarks", "GPL-3.0 License"
             VALUE "ProductName", "BPR"
-            VALUE "ProductVersion", "3.0.0"
+            VALUE "ProductVersion", "3.1.0"
         END
     END
     BLOCK "VarFileInfo"

@@ -9,6 +9,11 @@ namespace BPR::Core
     {
         constexpr float kMinimumGameplayDamage = 0.001F;
         constexpr float kMinimumRemainingFraction = 0.0001F;
+        // Material angles are authored against the default Ricochet Angle of
+        // 70, which gives a 20-degree plane-angle window. Scaling by the
+        // player's current window preserves the family ordering while making
+        // the global control useful when material angles are enabled.
+        constexpr float kMaterialAngleReferenceWindowDegrees = 20.0F;
 
         float BehaviorCost(SurfaceBehavior behavior) noexcept
         {
@@ -32,9 +37,13 @@ namespace BPR::Core
     ReboundResult EvaluateRebound(const ReboundInput& input) noexcept
     {
         ReboundResult result;
-        if (!input.settings.enabled ||
-            input.surface.behavior == SurfaceBehavior::kSuppressRebound ||
+        const bool optInMaterialSurface = input.settings.useMaterialAngles &&
+            input.surface.materialRicochetEligible;
+        const bool passiveSurface =
             input.surface.behavior == SurfaceBehavior::kLiquid ||
+            input.surface.behavior == SurfaceBehavior::kSuppressRebound;
+        if (!input.settings.enabled ||
+            (passiveSurface && !optInMaterialSurface) ||
             (input.projectile.energyBeam && !input.surface.conductive)) {
             return result;
         }
@@ -51,11 +60,19 @@ namespace BPR::Core
             return result;
         }
 
+        float configuredSurfaceLimit = input.surface.glancingLimitDegrees;
+        if (input.settings.useMaterialAngles) {
+            const float materialScale = globalPlaneLimit / kMaterialAngleReferenceWindowDegrees;
+            configuredSurfaceLimit = input.surface.materialRicochetAngleDegrees * materialScale;
+        }
         const float surfacePlaneLimit = std::clamp(
-            input.surface.glancingLimitDegrees * input.projectile.glancingTolerance,
-            0.0F,
-            90.0F);
-        if (input.mode == ReboundMode::kGlancingPriority && *planeAngle > surfacePlaneLimit) {
+            std::min(globalPlaneLimit,
+                configuredSurfaceLimit * input.projectile.glancingTolerance),
+            0.0F, 90.0F);
+        const bool surfaceLimitApplies =
+            input.mode == ReboundMode::kGlancingPriority || input.settings.useMaterialAngles;
+        result.effectiveAngleLimitDegrees = surfaceLimitApplies ? surfacePlaneLimit : globalPlaneLimit;
+        if (surfaceLimitApplies && *planeAngle > surfacePlaneLimit) {
             return result;
         }
 
@@ -69,12 +86,18 @@ namespace BPR::Core
         const float incidence = std::clamp(*planeAngle / 90.0F, 0.0F, 1.0F);
         const float repeatMultiplier = 1.0F +
             std::max(input.settings.repeatPenalty, 0.0F) * static_cast<float>(input.priorRebounds);
+        const float legacySurfaceCost = passiveSurface ?
+            1.0F :
+            std::max(input.surface.reboundCostScale, 0.0F) * BehaviorCost(input.surface.behavior);
+        const float surfaceCost = input.settings.useMaterialLoss ?
+            std::clamp(input.surface.materialRicochetLossScale, 0.75F, 1.25F) :
+            legacySurfaceCost;
         const float responseCostPercent =
             (std::max(input.settings.baseEnergyCost, 0.0F) +
                 std::max(input.settings.incidenceEnergyCost, 0.0F) * incidence * incidence) *
-            std::max(input.surface.reboundCostScale, 0.0F) *
+            surfaceCost *
             std::max(input.projectile.reboundCostScale, 0.0F) *
-            BehaviorCost(input.surface.behavior) * repeatMultiplier;
+            repeatMultiplier;
 
         if (!std::isfinite(responseCostPercent) ||
             responseCostPercent <= 0.0F || responseCostPercent >= 100.0F) {

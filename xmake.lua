@@ -3,10 +3,11 @@ includes("lib/commonlibf4")
 
 -- name and version
 local plugin_name = "BPR"
-local project_version = "3.0.0"
-local plugin_version = "3.0.0.0"
-local plugin_version_major, plugin_version_minor, plugin_version_patch, plugin_version_tweak =
-    plugin_version:match("^(%d+)%.(%d+)%.(%d+)%.(%d+)$")
+local project_version = "3.1.0"
+local plugin_version = "3.1.0"
+local plugin_version_major, plugin_version_minor, plugin_version_patch =
+    plugin_version:match("^(%d+)%.(%d+)%.(%d+)$")
+local plugin_version_tweak = "0"
 
 -- set project constants
 set_project(plugin_name)

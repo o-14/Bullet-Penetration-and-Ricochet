@@ -3,7 +3,7 @@ param()
 
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path -LiteralPath (Split-Path -Parent $PSScriptRoot)).Path
-$version = '3.0.0'
+$version = '3.1.0'
 $stage = Join-Path $root "build\package\BPR-$version"
 $dist = Join-Path $root 'dist'
 $archive = Join-Path $dist "Bullet Penetration and Ricochet-$version.zip"
@@ -36,7 +36,8 @@ New-Item -ItemType Directory -Path $licenseDirectory | Out-Null
 Copy-Item -LiteralPath (Join-Path $root 'LICENSE') -Destination (Join-Path $licenseDirectory 'GPL-3.0.txt')
 Copy-Item -LiteralPath (Join-Path $root 'EXCEPTIONS') -Destination (Join-Path $licenseDirectory 'GPL-3.0-EXCEPTIONS.txt')
 Copy-Item -LiteralPath (Join-Path $root 'licenses\PenetrationSystem-MIT.txt') -Destination $licenseDirectory
-Copy-Item -LiteralPath (Join-Path $root 'lib\commonlibf4\LICENSE') -Destination (Join-Path $licenseDirectory 'CommonLibF4-MIT.txt')
+Copy-Item -LiteralPath (Join-Path $root 'lib\commonlibf4\LICENSE') -Destination (Join-Path $licenseDirectory 'CommonLibF4-GPL-3.0.txt')
+Copy-Item -LiteralPath (Join-Path $root 'lib\commonlibf4\EXCEPTIONS') -Destination (Join-Path $licenseDirectory 'CommonLibF4-EXCEPTIONS.txt')
 Copy-Item -LiteralPath (Join-Path $root 'licenses\spdlog-MIT.txt') -Destination (Join-Path $licenseDirectory 'spdlog-MIT.txt')
 Copy-Item -LiteralPath (Join-Path $root 'COPYRIGHT.md') -Destination $stage
 Copy-Item -LiteralPath (Join-Path $root 'THIRD_PARTY_NOTICES.md') -Destination $stage
